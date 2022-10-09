@@ -21,3 +21,10 @@ export class GetAlbumDto {
   @ApiProperty()
   id: string;
 }
+
+export class GetTop10Dto {
+  @IsString()
+  @IsNotEmpty()
+  @ApiProperty()
+  key: string;
+}

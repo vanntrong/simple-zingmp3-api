@@ -1,5 +1,10 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { GetAlbumDto, GetDetailArtistDto, SearchMusicDto } from './music.dto';
+import {
+  GetAlbumDto,
+  GetDetailArtistDto,
+  GetTop10Dto,
+  SearchMusicDto,
+} from './music.dto';
 import { MusicService } from './music.service';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -13,20 +18,30 @@ export class MusicController {
     return this.musicService.getHome(page);
   }
 
-  @Get('search')
-  searchMusic(@Query() query: SearchMusicDto) {
-    return this.musicService.search(query.keyword);
-  }
+  // @Get('search')
+  // searchMusic(@Query() query: SearchMusicDto) {
+  //   return this.musicService.search(query.keyword);
+  // }
 
   @Get('top-100')
-  getTop100() {
-    return this.musicService.getTop100();
+  getTop100(@Query() { key }: GetTop10Dto) {
+    return this.musicService.getTop100(key);
   }
 
-  @Get('artist')
-  getArtist(@Query() query: GetDetailArtistDto) {
-    return this.musicService.getArtistById(query.keyword);
+  @Get('top-20')
+  getTop20() {
+    return this.musicService.getTop20();
   }
+
+  @Get('topic')
+  getTopic() {
+    return this.musicService.getTop20();
+  }
+
+  // @Get('artist')
+  // getArtist(@Query() query: GetDetailArtistDto) {
+  //   return this.musicService.getArtistById(query.keyword);
+  // }
 
   @Get('album/:id')
   getAlbum(@Param() params: GetAlbumDto) {
@@ -36,5 +51,10 @@ export class MusicController {
   @Get(':id')
   getMusic(@Param('id') id: string) {
     return this.musicService.getMusicById(id);
+  }
+
+  @Get(':id/lyric')
+  getLyric(@Param('id') id: string) {
+    return this.musicService.getLyric(id);
   }
 }
