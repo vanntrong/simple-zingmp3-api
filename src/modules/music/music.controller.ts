@@ -14,38 +14,53 @@ export class MusicController {
   constructor(private musicService: MusicService) {}
 
   @Get('home')
-  getHome(@Query('page') page?: number) {
-    return this.musicService.getHome(page);
+  getHome() {
+    return this.musicService.getHome();
   }
 
-  // @Get('search')
-  // searchMusic(@Query() query: SearchMusicDto) {
-  //   return this.musicService.search(query.keyword);
-  // }
+  @Get('search')
+  searchMusic(@Query() { keyword }: SearchMusicDto) {
+    return this.musicService.search(keyword);
+  }
 
   @Get('top-100')
   getTop100(@Query() { key }: GetTop10Dto) {
     return this.musicService.getTop100(key);
   }
 
-  @Get('top-20')
-  getTop20() {
-    return this.musicService.getTop20();
+  @Get('playlists')
+  getPlaylists() {
+    return this.musicService.getPlaylist();
+  }
+
+  @Get('playlists/:id')
+  getPlaylistDetail(@Param('id') id: string) {
+    return this.musicService.getPlaylistDetail(id);
   }
 
   @Get('topic')
   getTopic() {
-    return this.musicService.getTop20();
+    return this.musicService.getTopic();
   }
 
-  // @Get('artist')
-  // getArtist(@Query() query: GetDetailArtistDto) {
-  //   return this.musicService.getArtistById(query.keyword);
+  @Get('topic/:id')
+  getTopicDetail(@Param('id') id: string) {
+    return this.musicService.getTopicDetail(id);
+  }
+
+  @Get('artists/trending')
+  getTrendingArtist() {
+    return this.musicService.getTrendingArtist();
+  }
+
+  // @Get('artits/explorer')
+  // getExplorerArtist() {
+  //   return this.musicService.getExplorerArtist();
   // }
 
-  @Get('album/:id')
-  getAlbum(@Param() params: GetAlbumDto) {
-    return this.musicService.getAlbumById(params.id);
+  @Get('artists/:id')
+  getArtistDetail(@Param('id') id: string) {
+    return this.musicService.getArtistDetail(id);
   }
 
   @Get(':id')
